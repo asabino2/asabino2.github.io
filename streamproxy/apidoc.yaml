@@ -1749,8 +1749,6 @@ paths:
             application/json:
               schema:
                 type: object
-              example:
-                message: requested the SO to kill process undefined
               examples:
                 example:
                   value:
