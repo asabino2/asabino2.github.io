@@ -4,6 +4,8 @@ info:
   description: StreamProxy's API
   version: 1.0.0
 servers:
+  - description: SwaggerHub API Auto Mocking
+    url: 'https://virtserver.swaggerhub.com/asabino2/streamproxy/1.0.0'
   - url: 'http://localhost:4211'
 components:
   securitySchemes:
@@ -1734,6 +1736,10 @@ paths:
                   description: process pid to kill
               required:
                 - PID
+            examples:
+              example:
+                value:
+                  PID: 14660
       security:
         - basicAuth: []
       responses:
@@ -1745,6 +1751,10 @@ paths:
                 type: object
               example:
                 message: requested the SO to kill process undefined
+              examples:
+                example:
+                  value:
+                    message: requested the SO to kill process undefined
   /api/streamserver:
     get:
       tags:
@@ -1908,6 +1918,22 @@ paths:
                 - streamname
                 - streammethod
                 - url
+            examples:
+              example:
+                value:
+                  streamname: exemplostreamserver
+                  streammethod: /videostream/ffmpeg
+                  streamdescription: exemplo de streamserver
+                  channelnumber: '115'
+                  url: 'http://livestream.com/'
+                  streamprovider: myprovider
+                  videoformat: mpeg-ts
+                  videocodec: mpeg2
+                  framesize: 1920x1080
+                  framerate: '60'
+                  audiocodec: mp3
+                  title: ''
+                  logourl: 'http://logourl.com/image.jpg'
       security:
         - basicAuth: []
       responses:
@@ -2001,6 +2027,22 @@ paths:
                   description: url for logo of streamserver
               required:
                 - streamname
+            examples:
+              example:
+                value:
+                  streamname: exemplostreamserver
+                  streammethod: /videostream/ffmpeg
+                  streamdescription: exemplo de streamserver2
+                  channelnumber: '115'
+                  url: 'http://livestream.com/'
+                  streamprovider: myprovider
+                  videoformat: mpeg-ts
+                  videocodec: mpeg2
+                  framesize: 1920x1080
+                  framerate: '60'
+                  audiocodec: mp3
+                  title: ''
+                  logourl: 'http://logourl.com/image.jpg'
       security:
         - basicAuth: []
       responses:
@@ -2170,6 +2212,10 @@ paths:
                   type: string
               required:
                 - streamname
+            examples:
+              example:
+                value:
+                  streamname: extremadura
       security:
         - basicAuth: []
       responses:
@@ -2210,6 +2256,10 @@ paths:
                   type: string
               required:
                 - streamname
+            examples:
+              example:
+                value:
+                  streamname: extremadura
       security:
         - basicAuth: []
       responses:
@@ -2706,6 +2756,10 @@ paths:
                   description: new password
               required:
                 - password
+            examples:
+              example-1:
+                value:
+                  password: newpass@123
       security:
         - basicAuth: []
       responses:
