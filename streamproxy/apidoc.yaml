@@ -4,6 +4,9 @@ info:
   description: StreamProxy's API
   version: 1.0.0
 servers:
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/asabino2/streamproxy/1.0.0
   - url: http://localhost:4211
 components:
   securitySchemes:
@@ -14,7 +17,7 @@ paths:
   /api/checkstream:
     get:
       tags:
-        - default
+        - stream data
       summary: stream check
       description: >-
         checks if a stream is online or offline, the output will be in json
@@ -42,7 +45,7 @@ paths:
   /api/streaminfo:
     get:
       tags:
-        - default
+        - stream data
       summary: retrieve livestream information
       description: >-
         Retrieve livestream information through ffprobe, output will be in json
@@ -758,7 +761,7 @@ paths:
   /api/killProcess:
     post:
       tags:
-        - default
+        - process
       summary: kill process
       description: kill process related to streamproxy
       requestBody:
@@ -782,7 +785,7 @@ paths:
   /api/streamserver:
     get:
       tags:
-        - default
+        - Stream Server
       summary: retrieve a list of livestreams
       description: get a list of streamservers created
       security:
@@ -815,7 +818,7 @@ paths:
                   connections: 0
     post:
       tags:
-        - default
+        - Stream Server
       summary: create a new livestream
       description: create a streamserver
       requestBody:
@@ -851,7 +854,7 @@ paths:
                 message: Streamserver exemplostreamserver has created
     put:
       tags:
-        - default
+        - Stream Server
       summary: change a streamserver
       description: change a streamserver
       requestBody:
@@ -887,7 +890,7 @@ paths:
                 message: Streamserver exemplostreamserver has changed
     delete:
       tags:
-        - default
+        - Stream Server
       summary: delete a streamserver
       description: delete a streamserver
       security:
@@ -912,7 +915,7 @@ paths:
   /api/streamserver/status:
     get:
       tags:
-        - default
+        - Stream Server
       summary: get users connected on streamsevers
       description: list of connections of streamservers
       security:
@@ -945,7 +948,7 @@ paths:
   /api/streamserver/start:
     post:
       tags:
-        - default
+        - Stream Server
       summary: start a streamserver
       description: start a streamserver
       requestBody:
@@ -970,7 +973,7 @@ paths:
   /api/streamserver/stop:
     post:
       tags:
-        - default
+        - Stream Server
       summary: stop streamserver
       description: stop a streamserver
       requestBody:
@@ -995,7 +998,7 @@ paths:
   /api/log:
     get:
       tags:
-        - default
+        - log
       summary: retrieve the logs of streamproxy
       description: get the log of streamproxy
       security:
@@ -1161,7 +1164,7 @@ paths:
   /api/users:
     get:
       tags:
-        - default
+        - user
       summary: retrieve a list of users of streamproxy
       security:
         - basicAuth: []
@@ -1190,7 +1193,7 @@ paths:
                     administrator: true
     post:
       tags:
-        - default
+        - user
       summary: create a new user
       requestBody:
         content:
@@ -1216,7 +1219,7 @@ paths:
                 message: user teste3 was created
     put:
       tags:
-        - default
+        - user
       summary: change a user
       requestBody:
         content:
@@ -1240,7 +1243,7 @@ paths:
                 message: user teste3 has been updated
     delete:
       tags:
-        - default
+        - user
       summary: delete a user
       security:
         - basicAuth: []
@@ -1264,7 +1267,7 @@ paths:
   /api/users/changepassword:
     put:
       tags:
-        - default
+        - user
       summary: change password of logged user
       requestBody:
         content:
