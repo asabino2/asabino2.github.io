@@ -1,15 +1,21 @@
 openapi: 3.0.0
 info:
   title: streamproxy
+  description: StreamProxy's API
   version: 1.0.0
 servers:
   - url: http://localhost:4211
+components:
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
 paths:
   /api/checkstream:
     get:
       tags:
         - default
-      summary: /api/checkstream
+      summary: stream check
       description: >-
         checks if a stream is online or offline, the output will be in json
         format
@@ -37,7 +43,7 @@ paths:
     get:
       tags:
         - default
-      summary: /api/streaminfo
+      summary: retrieve livestream information
       description: >-
         Retrieve livestream information through ffprobe, output will be in json
         format
@@ -753,7 +759,7 @@ paths:
     post:
       tags:
         - default
-      summary: /api/killProcess
+      summary: kill process
       description: kill process related to streamproxy
       requestBody:
         content:
@@ -762,6 +768,8 @@ paths:
               type: object
               example:
                 PID: 14660
+      security:
+        - basicAuth: []
       responses:
         '200':
           description: OK
@@ -775,8 +783,10 @@ paths:
     get:
       tags:
         - default
-      summary: /api/streamserver
+      summary: retrieve a list of livestreams
       description: get a list of streamservers created
+      security:
+        - basicAuth: []
       responses:
         '200':
           description: OK
@@ -806,7 +816,7 @@ paths:
     post:
       tags:
         - default
-      summary: /api/streamserver
+      summary: create a new livestream
       description: create a streamserver
       requestBody:
         content:
@@ -827,6 +837,8 @@ paths:
                 audiocodec: mp3
                 title: ''
                 logourl: http://logourl.com/image.jpg
+      security:
+        - basicAuth: []
       responses:
         '200':
           description: OK
@@ -840,7 +852,7 @@ paths:
     put:
       tags:
         - default
-      summary: /api/streamserver
+      summary: change a streamserver
       description: change a streamserver
       requestBody:
         content:
@@ -861,6 +873,8 @@ paths:
                 audiocodec: mp3
                 title: ''
                 logourl: http://logourl.com/image.jpg
+      security:
+        - basicAuth: []
       responses:
         '200':
           description: OK
@@ -874,8 +888,17 @@ paths:
     delete:
       tags:
         - default
-      summary: /api/streamserver
+      summary: delete a streamserver
       description: delete a streamserver
+      security:
+        - basicAuth: []
+      parameters:
+        - name: streamname
+          in: header
+          schema:
+            type: string
+          description: streamserver to delete
+          example: teste3
       responses:
         '200':
           description: OK
@@ -890,8 +913,10 @@ paths:
     get:
       tags:
         - default
-      summary: /api/streamserver/status
+      summary: get users connected on streamsevers
       description: list of connections of streamservers
+      security:
+        - basicAuth: []
       responses:
         '200':
           description: OK
@@ -921,7 +946,7 @@ paths:
     post:
       tags:
         - default
-      summary: /api/streamserver/start
+      summary: start a streamserver
       description: start a streamserver
       requestBody:
         content:
@@ -930,6 +955,8 @@ paths:
               type: object
               example:
                 streamname: extremadura
+      security:
+        - basicAuth: []
       responses:
         '200':
           description: OK
@@ -944,7 +971,7 @@ paths:
     post:
       tags:
         - default
-      summary: /api/streamserver/stop
+      summary: stop streamserver
       description: stop a streamserver
       requestBody:
         content:
@@ -953,6 +980,8 @@ paths:
               type: object
               example:
                 streamname: extremadura
+      security:
+        - basicAuth: []
       responses:
         '200':
           description: OK
@@ -967,8 +996,10 @@ paths:
     get:
       tags:
         - default
-      summary: /api/log
+      summary: retrieve the logs of streamproxy
       description: get the log of streamproxy
+      security:
+        - basicAuth: []
       responses:
         '200':
           description: OK
@@ -1127,3 +1158,129 @@ paths:
                 - remove process 19264 from status
                 - close stop of PID 19264, code 1, signal null
                 - remove process 19264 from status
+  /api/users:
+    get:
+      tags:
+        - default
+      summary: retrieve a list of users of streamproxy
+      security:
+        - basicAuth: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                - username: anonymous
+                  password: ''
+                  fullname: Anonymous
+                  authorizations:
+                    basic: false
+                    basicWatchers: false
+                    streamserverWatchersbasic: false
+                    playlistdownloader: false
+                    streamserverWatchersfull: false
+                    administrator: true
+                - username: admin
+                  password: d033e22ae348aeb5660fc2140aec35850c4da997
+                  fullname: Administrator
+                  authorizations:
+                    administrator: true
+    post:
+      tags:
+        - default
+      summary: create a new user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                username: teste3
+                fullname: Teste 3
+                password: teste3
+                basic: true
+      security:
+        - basicAuth: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                useradded: true
+                message: user teste3 was created
+    put:
+      tags:
+        - default
+      summary: change a user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                username: teste3
+                fullname: Teste 332
+      security:
+        - basicAuth: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                userchanged: true
+                message: user teste3 has been updated
+    delete:
+      tags:
+        - default
+      summary: delete a user
+      security:
+        - basicAuth: []
+      parameters:
+        - name: username
+          in: header
+          schema:
+            type: string
+          description: user to delete
+          example: teste3
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                userdeleted: true
+                message: user teste3 has been deleted
+  /api/users/changepassword:
+    put:
+      tags:
+        - default
+      summary: change password of logged user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                password: teste4
+      security:
+        - basicAuth: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                passwordchanged: true
